@@ -11,3 +11,23 @@
 # Neo4j data (managed by Docker volumes)
 data/
 logs/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+
+# Poetry
+.backup/
+
+# ML Models (large files)
+ml/models/*.joblib
+
+# Logs
+*.log
+/tmp/
