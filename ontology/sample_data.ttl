@@ -1,0 +1,638 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix upw: <http://example.org/upw#> .
+@prefix upw-data: <http://example.org/upw/data#> .
+
+# =============================================================================
+# UPW Process Sample Data
+# =============================================================================
+
+# =============================================================================
+# EQUIPMENT INSTANCES (6 total - one per equipment type)
+# =============================================================================
+
+upw-data:pump-001 a upw:Pump ;
+    upw:equipmentId "PUMP-001" ;
+    upw:equipmentName "Primary Feed Pump" ;
+    upw:installationDate "2022-03-15"^^xsd:date ;
+    upw:operatingHours "15680.5"^^xsd:double ;
+    upw:hasSensor upw-data:sensor-vib-001 , upw-data:sensor-pres-001 , upw-data:sensor-curr-001 ;
+    upw:hasMaintenanceSchedule upw-data:maint-sched-pump-001 ;
+    upw:hasPrediction upw-data:failure-pred-pump-001 .
+
+upw-data:filter-001 a upw:Filter ;
+    upw:equipmentId "FILT-001" ;
+    upw:equipmentName "Pre-Treatment Filter" ;
+    upw:installationDate "2022-03-15"^^xsd:date ;
+    upw:operatingHours "15680.5"^^xsd:double ;
+    upw:hasSensor upw-data:sensor-dp-001 , upw-data:sensor-flow-001 ;
+    upw:hasMaintenanceSchedule upw-data:maint-sched-filter-001 .
+
+upw-data:ro-system-001 a upw:ROSystem ;
+    upw:equipmentId "RO-001" ;
+    upw:equipmentName "Primary RO Unit" ;
+    upw:installationDate "2022-04-01"^^xsd:date ;
+    upw:operatingHours "15200.0"^^xsd:double ;
+    upw:hasSensor upw-data:sensor-pres-002 , upw-data:sensor-pres-003 , upw-data:sensor-cond-001 , upw-data:sensor-flow-002 ;
+    upw:hasMaintenanceSchedule upw-data:maint-sched-ro-001 ;
+    upw:hasPrediction upw-data:failure-pred-ro-001 .
+
+upw-data:ion-exchanger-001 a upw:IonExchanger ;
+    upw:equipmentId "IX-001" ;
+    upw:equipmentName "Mixed Bed Ion Exchanger" ;
+    upw:installationDate "2022-04-15"^^xsd:date ;
+    upw:operatingHours "14800.0"^^xsd:double ;
+    upw:hasSensor upw-data:sensor-res-001 , upw-data:sensor-flow-003 , upw-data:sensor-dp-002 ;
+    upw:hasMaintenanceSchedule upw-data:maint-sched-ix-001 .
+
+upw-data:uv-sterilizer-001 a upw:UVSterilizer ;
+    upw:equipmentId "UV-001" ;
+    upw:equipmentName "UV Sterilization Unit" ;
+    upw:installationDate "2022-05-01"^^xsd:date ;
+    upw:operatingHours "14500.0"^^xsd:double ;
+    upw:hasSensor upw-data:sensor-uv-001 , upw-data:sensor-temp-001 ;
+    upw:hasMaintenanceSchedule upw-data:maint-sched-uv-001 .
+
+upw-data:storage-tank-001 a upw:StorageTank ;
+    upw:equipmentId "TANK-001" ;
+    upw:equipmentName "UPW Storage Tank" ;
+    upw:installationDate "2022-03-01"^^xsd:date ;
+    upw:operatingHours "16000.0"^^xsd:double ;
+    upw:hasSensor upw-data:sensor-level-001 , upw-data:sensor-res-002 , upw-data:sensor-temp-002 ;
+    upw:hasMaintenanceSchedule upw-data:maint-sched-tank-001 .
+
+# =============================================================================
+# SENSOR INSTANCES (18 total)
+# =============================================================================
+
+# Pump sensors
+upw-data:sensor-vib-001 a upw:VibrationSensor ;
+    upw:sensorId "VIB-001" ;
+    upw:sensorLocation "Pump motor bearing housing" ;
+    upw:samplingRate "1000.0"^^xsd:double ;
+    sosa:observes upw:Vibration ;
+    upw:monitoredBy upw-data:pump-001 .
+
+upw-data:sensor-pres-001 a upw:PressureSensor ;
+    upw:sensorId "PRES-001" ;
+    upw:sensorLocation "Pump discharge" ;
+    upw:samplingRate "10.0"^^xsd:double ;
+    sosa:observes upw:Pressure ;
+    upw:monitoredBy upw-data:pump-001 .
+
+upw-data:sensor-curr-001 a upw:CurrentSensor ;
+    upw:sensorId "CURR-001" ;
+    upw:sensorLocation "Pump motor power supply" ;
+    upw:samplingRate "100.0"^^xsd:double ;
+    sosa:observes upw:ElectricalCurrent ;
+    upw:monitoredBy upw-data:pump-001 .
+
+# Filter sensors
+upw-data:sensor-dp-001 a upw:DifferentialPressureSensor ;
+    upw:sensorId "DP-001" ;
+    upw:sensorLocation "Across filter element" ;
+    upw:samplingRate "1.0"^^xsd:double ;
+    sosa:observes upw:DifferentialPressure ;
+    upw:monitoredBy upw-data:filter-001 .
+
+upw-data:sensor-flow-001 a upw:FlowSensor ;
+    upw:sensorId "FLOW-001" ;
+    upw:sensorLocation "Filter outlet" ;
+    upw:samplingRate "10.0"^^xsd:double ;
+    sosa:observes upw:FlowRate ;
+    upw:monitoredBy upw-data:filter-001 .
+
+# RO System sensors
+upw-data:sensor-pres-002 a upw:PressureSensor ;
+    upw:sensorId "PRES-002" ;
+    upw:sensorLocation "RO feed inlet" ;
+    upw:samplingRate "10.0"^^xsd:double ;
+    sosa:observes upw:Pressure ;
+    upw:monitoredBy upw-data:ro-system-001 .
+
+upw-data:sensor-pres-003 a upw:PressureSensor ;
+    upw:sensorId "PRES-003" ;
+    upw:sensorLocation "RO permeate outlet" ;
+    upw:samplingRate "10.0"^^xsd:double ;
+    sosa:observes upw:Pressure ;
+    upw:monitoredBy upw-data:ro-system-001 .
+
+upw-data:sensor-cond-001 a upw:ConductivitySensor ;
+    upw:sensorId "COND-001" ;
+    upw:sensorLocation "RO permeate line" ;
+    upw:samplingRate "1.0"^^xsd:double ;
+    sosa:observes upw:Conductivity ;
+    upw:monitoredBy upw-data:ro-system-001 .
+
+upw-data:sensor-flow-002 a upw:FlowSensor ;
+    upw:sensorId "FLOW-002" ;
+    upw:sensorLocation "RO permeate outlet" ;
+    upw:samplingRate "10.0"^^xsd:double ;
+    sosa:observes upw:FlowRate ;
+    upw:monitoredBy upw-data:ro-system-001 .
+
+# Ion Exchanger sensors
+upw-data:sensor-res-001 a upw:ResistivitySensor ;
+    upw:sensorId "RES-001" ;
+    upw:sensorLocation "IX outlet" ;
+    upw:samplingRate "1.0"^^xsd:double ;
+    sosa:observes upw:Resistivity ;
+    upw:monitoredBy upw-data:ion-exchanger-001 .
+
+upw-data:sensor-flow-003 a upw:FlowSensor ;
+    upw:sensorId "FLOW-003" ;
+    upw:sensorLocation "IX outlet" ;
+    upw:samplingRate "10.0"^^xsd:double ;
+    sosa:observes upw:FlowRate ;
+    upw:monitoredBy upw-data:ion-exchanger-001 .
+
+upw-data:sensor-dp-002 a upw:DifferentialPressureSensor ;
+    upw:sensorId "DP-002" ;
+    upw:sensorLocation "Across IX bed" ;
+    upw:samplingRate "1.0"^^xsd:double ;
+    sosa:observes upw:DifferentialPressure ;
+    upw:monitoredBy upw-data:ion-exchanger-001 .
+
+# UV Sterilizer sensors
+upw-data:sensor-uv-001 a upw:UVIntensitySensor ;
+    upw:sensorId "UV-001" ;
+    upw:sensorLocation "UV chamber" ;
+    upw:samplingRate "1.0"^^xsd:double ;
+    sosa:observes upw:UVIntensity ;
+    upw:monitoredBy upw-data:uv-sterilizer-001 .
+
+upw-data:sensor-temp-001 a upw:TemperatureSensor ;
+    upw:sensorId "TEMP-001" ;
+    upw:sensorLocation "UV lamp housing" ;
+    upw:samplingRate "0.1"^^xsd:double ;
+    sosa:observes upw:Temperature ;
+    upw:monitoredBy upw-data:uv-sterilizer-001 .
+
+# Storage Tank sensors
+upw-data:sensor-level-001 a upw:LevelSensor ;
+    upw:sensorId "LVL-001" ;
+    upw:sensorLocation "Storage tank" ;
+    upw:samplingRate "0.1"^^xsd:double ;
+    sosa:observes upw:WaterLevel ;
+    upw:monitoredBy upw-data:storage-tank-001 .
+
+upw-data:sensor-res-002 a upw:ResistivitySensor ;
+    upw:sensorId "RES-002" ;
+    upw:sensorLocation "Storage tank outlet" ;
+    upw:samplingRate "1.0"^^xsd:double ;
+    sosa:observes upw:Resistivity ;
+    upw:monitoredBy upw-data:storage-tank-001 .
+
+upw-data:sensor-temp-002 a upw:TemperatureSensor ;
+    upw:sensorId "TEMP-002" ;
+    upw:sensorLocation "Storage tank" ;
+    upw:samplingRate "0.1"^^xsd:double ;
+    sosa:observes upw:Temperature ;
+    upw:monitoredBy upw-data:storage-tank-001 .
+
+# =============================================================================
+# SENSOR OBSERVATIONS (Recent readings)
+# =============================================================================
+
+# Vibration observations - showing potential anomaly
+upw-data:obs-vib-001-001 a upw:SensorObservation ;
+    sosa:madeBySensor upw-data:sensor-vib-001 ;
+    sosa:observedProperty upw:Vibration ;
+    upw:timestamp "2025-01-20T10:00:00Z"^^xsd:dateTime ;
+    upw:value "2.5"^^xsd:double ;
+    upw:unit "mm/s" .
+
+upw-data:obs-vib-001-002 a upw:SensorObservation ;
+    sosa:madeBySensor upw-data:sensor-vib-001 ;
+    sosa:observedProperty upw:Vibration ;
+    upw:timestamp "2025-01-20T10:15:00Z"^^xsd:dateTime ;
+    upw:value "3.8"^^xsd:double ;
+    upw:unit "mm/s" .
+
+upw-data:obs-vib-001-003 a upw:SensorObservation ;
+    sosa:madeBySensor upw-data:sensor-vib-001 ;
+    sosa:observedProperty upw:Vibration ;
+    upw:timestamp "2025-01-20T10:30:00Z"^^xsd:dateTime ;
+    upw:value "5.2"^^xsd:double ;
+    upw:unit "mm/s" .
+
+# Pressure observations
+upw-data:obs-pres-001-001 a upw:SensorObservation ;
+    sosa:madeBySensor upw-data:sensor-pres-001 ;
+    sosa:observedProperty upw:Pressure ;
+    upw:timestamp "2025-01-20T10:00:00Z"^^xsd:dateTime ;
+    upw:value "4.5"^^xsd:double ;
+    upw:unit "bar" .
+
+upw-data:obs-pres-001-002 a upw:SensorObservation ;
+    sosa:madeBySensor upw-data:sensor-pres-001 ;
+    sosa:observedProperty upw:Pressure ;
+    upw:timestamp "2025-01-20T10:15:00Z"^^xsd:dateTime ;
+    upw:value "4.3"^^xsd:double ;
+    upw:unit "bar" .
+
+# Current observations
+upw-data:obs-curr-001-001 a upw:SensorObservation ;
+    sosa:madeBySensor upw-data:sensor-curr-001 ;
+    sosa:observedProperty upw:ElectricalCurrent ;
+    upw:timestamp "2025-01-20T10:00:00Z"^^xsd:dateTime ;
+    upw:value "12.5"^^xsd:double ;
+    upw:unit "A" .
+
+upw-data:obs-curr-001-002 a upw:SensorObservation ;
+    sosa:madeBySensor upw-data:sensor-curr-001 ;
+    sosa:observedProperty upw:ElectricalCurrent ;
+    upw:timestamp "2025-01-20T10:15:00Z"^^xsd:dateTime ;
+    upw:value "14.2"^^xsd:double ;
+    upw:unit "A" .
+
+# Filter differential pressure
+upw-data:obs-dp-001-001 a upw:SensorObservation ;
+    sosa:madeBySensor upw-data:sensor-dp-001 ;
+    sosa:observedProperty upw:DifferentialPressure ;
+    upw:timestamp "2025-01-20T10:00:00Z"^^xsd:dateTime ;
+    upw:value "0.8"^^xsd:double ;
+    upw:unit "bar" .
+
+# RO conductivity
+upw-data:obs-cond-001-001 a upw:SensorObservation ;
+    sosa:madeBySensor upw-data:sensor-cond-001 ;
+    sosa:observedProperty upw:Conductivity ;
+    upw:timestamp "2025-01-20T10:00:00Z"^^xsd:dateTime ;
+    upw:value "5.2"^^xsd:double ;
+    upw:unit "uS/cm" .
+
+# Resistivity at IX outlet
+upw-data:obs-res-001-001 a upw:SensorObservation ;
+    sosa:madeBySensor upw-data:sensor-res-001 ;
+    sosa:observedProperty upw:Resistivity ;
+    upw:timestamp "2025-01-20T10:00:00Z"^^xsd:dateTime ;
+    upw:value "18.2"^^xsd:double ;
+    upw:unit "MOhm-cm" .
+
+# UV intensity
+upw-data:obs-uv-001-001 a upw:SensorObservation ;
+    sosa:madeBySensor upw-data:sensor-uv-001 ;
+    sosa:observedProperty upw:UVIntensity ;
+    upw:timestamp "2025-01-20T10:00:00Z"^^xsd:dateTime ;
+    upw:value "40.5"^^xsd:double ;
+    upw:unit "mW/cm2" .
+
+# Tank level
+upw-data:obs-level-001-001 a upw:SensorObservation ;
+    sosa:madeBySensor upw-data:sensor-level-001 ;
+    sosa:observedProperty upw:WaterLevel ;
+    upw:timestamp "2025-01-20T10:00:00Z"^^xsd:dateTime ;
+    upw:value "78.5"^^xsd:double ;
+    upw:unit "percent" .
+
+# =============================================================================
+# ANOMALY DETECTIONS
+# =============================================================================
+
+upw-data:anomaly-001 a upw:AnomalyDetection ;
+    rdfs:label "Pump vibration anomaly" ;
+    sosa:madeBySensor upw-data:sensor-vib-001 ;
+    upw:timestamp "2025-01-20T10:30:00Z"^^xsd:dateTime ;
+    upw:anomalyScore "0.85"^^xsd:double ;
+    upw:triggeredBy upw-data:obs-vib-001-003 ;
+    rdfs:comment "Vibration level exceeded normal threshold - potential bearing wear detected" .
+
+upw-data:anomaly-002 a upw:AnomalyDetection ;
+    rdfs:label "RO membrane degradation signal" ;
+    sosa:madeBySensor upw-data:sensor-cond-001 ;
+    upw:timestamp "2025-01-20T09:45:00Z"^^xsd:dateTime ;
+    upw:anomalyScore "0.62"^^xsd:double ;
+    rdfs:comment "Permeate conductivity trending higher than normal - membrane performance declining" .
+
+upw-data:anomaly-003 a upw:AnomalyDetection ;
+    rdfs:label "Filter clogging indication" ;
+    sosa:madeBySensor upw-data:sensor-dp-001 ;
+    upw:timestamp "2025-01-19T14:00:00Z"^^xsd:dateTime ;
+    upw:anomalyScore "0.45"^^xsd:double ;
+    rdfs:comment "Differential pressure increasing - filter element may need replacement" .
+
+# =============================================================================
+# FAILURE PREDICTIONS
+# =============================================================================
+
+upw-data:failure-pred-pump-001 a upw:FailurePrediction ;
+    rdfs:label "Pump bearing failure prediction" ;
+    upw:timestamp "2025-01-20T11:00:00Z"^^xsd:dateTime ;
+    upw:predictedFailureDate "2025-02-15T00:00:00Z"^^xsd:dateTime ;
+    upw:confidenceScore "0.78"^^xsd:double ;
+    upw:remainingUsefulLife "620.0"^^xsd:double ;
+    upw:failureMode "Bearing wear" ;
+    upw:triggeredBy upw-data:anomaly-001 ;
+    rdfs:comment "Based on vibration trend analysis - bearing replacement recommended within 26 days" .
+
+upw-data:failure-pred-ro-001 a upw:FailurePrediction ;
+    rdfs:label "RO membrane replacement prediction" ;
+    upw:timestamp "2025-01-20T11:00:00Z"^^xsd:dateTime ;
+    upw:predictedFailureDate "2025-03-01T00:00:00Z"^^xsd:dateTime ;
+    upw:confidenceScore "0.65"^^xsd:double ;
+    upw:remainingUsefulLife "960.0"^^xsd:double ;
+    upw:failureMode "Membrane degradation" ;
+    upw:triggeredBy upw-data:anomaly-002 ;
+    rdfs:comment "Membrane performance below threshold expected by early March" .
+
+# =============================================================================
+# ENERGY PREDICTION (96-point forecast example for 2025-01-21)
+# =============================================================================
+
+upw-data:energy-pred-20250121 a upw:EnergyPrediction ;
+    rdfs:label "Energy forecast for 2025-01-21" ;
+    upw:timestamp "2025-01-20T18:00:00Z"^^xsd:dateTime ;
+    upw:forecastDate "2025-01-21"^^xsd:date ;
+    upw:confidenceScore "0.92"^^xsd:double ;
+    upw:totalDailyEnergy "2450.5"^^xsd:double ;
+    upw:peakPower "145.2"^^xsd:double ;
+    upw:hasForecastPoint
+        upw-data:forecast-20250121-00 ,
+        upw-data:forecast-20250121-01 ,
+        upw-data:forecast-20250121-02 ,
+        upw-data:forecast-20250121-03 ,
+        upw-data:forecast-20250121-04 ,
+        upw-data:forecast-20250121-05 ,
+        upw-data:forecast-20250121-06 ,
+        upw-data:forecast-20250121-07 ,
+        upw-data:forecast-20250121-08 ,
+        upw-data:forecast-20250121-09 ,
+        upw-data:forecast-20250121-10 ,
+        upw-data:forecast-20250121-11 ,
+        upw-data:forecast-20250121-12 ,
+        upw-data:forecast-20250121-13 ,
+        upw-data:forecast-20250121-14 ,
+        upw-data:forecast-20250121-15 ,
+        upw-data:forecast-20250121-32 ,
+        upw-data:forecast-20250121-48 ,
+        upw-data:forecast-20250121-64 ,
+        upw-data:forecast-20250121-80 ,
+        upw-data:forecast-20250121-95 .
+
+# Sample forecast points (showing key intervals)
+# Interval 0: 00:00-00:15
+upw-data:forecast-20250121-00 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "0"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T00:00:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "85.2"^^xsd:double ;
+    upw:confidenceScore "0.94"^^xsd:double .
+
+# Interval 1: 00:15-00:30
+upw-data:forecast-20250121-01 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "1"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T00:15:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "84.8"^^xsd:double ;
+    upw:confidenceScore "0.94"^^xsd:double .
+
+# Interval 2: 00:30-00:45
+upw-data:forecast-20250121-02 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "2"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T00:30:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "83.5"^^xsd:double ;
+    upw:confidenceScore "0.93"^^xsd:double .
+
+# Interval 3: 00:45-01:00
+upw-data:forecast-20250121-03 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "3"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T00:45:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "82.1"^^xsd:double ;
+    upw:confidenceScore "0.93"^^xsd:double .
+
+# Interval 4: 01:00-01:15
+upw-data:forecast-20250121-04 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "4"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T01:00:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "80.5"^^xsd:double ;
+    upw:confidenceScore "0.93"^^xsd:double .
+
+# Interval 5: 01:15-01:30
+upw-data:forecast-20250121-05 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "5"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T01:15:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "79.2"^^xsd:double ;
+    upw:confidenceScore "0.92"^^xsd:double .
+
+# Interval 6: 01:30-01:45
+upw-data:forecast-20250121-06 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "6"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T01:30:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "78.8"^^xsd:double ;
+    upw:confidenceScore "0.92"^^xsd:double .
+
+# Interval 7: 01:45-02:00
+upw-data:forecast-20250121-07 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "7"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T01:45:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "78.5"^^xsd:double ;
+    upw:confidenceScore "0.92"^^xsd:double .
+
+# Interval 8-15: Early morning (showing ramp up)
+upw-data:forecast-20250121-08 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "8"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T02:00:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "78.0"^^xsd:double ;
+    upw:confidenceScore "0.91"^^xsd:double .
+
+upw-data:forecast-20250121-09 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "9"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T02:15:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "77.5"^^xsd:double ;
+    upw:confidenceScore "0.91"^^xsd:double .
+
+upw-data:forecast-20250121-10 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "10"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T02:30:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "77.2"^^xsd:double ;
+    upw:confidenceScore "0.91"^^xsd:double .
+
+upw-data:forecast-20250121-11 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "11"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T02:45:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "77.0"^^xsd:double ;
+    upw:confidenceScore "0.90"^^xsd:double .
+
+upw-data:forecast-20250121-12 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "12"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T03:00:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "76.8"^^xsd:double ;
+    upw:confidenceScore "0.90"^^xsd:double .
+
+upw-data:forecast-20250121-13 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "13"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T03:15:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "76.5"^^xsd:double ;
+    upw:confidenceScore "0.90"^^xsd:double .
+
+upw-data:forecast-20250121-14 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "14"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T03:30:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "76.2"^^xsd:double ;
+    upw:confidenceScore "0.90"^^xsd:double .
+
+upw-data:forecast-20250121-15 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "15"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T03:45:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "76.0"^^xsd:double ;
+    upw:confidenceScore "0.89"^^xsd:double .
+
+# Interval 32: 08:00-08:15 (morning production start)
+upw-data:forecast-20250121-32 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "32"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T08:00:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "125.5"^^xsd:double ;
+    upw:confidenceScore "0.92"^^xsd:double .
+
+# Interval 48: 12:00-12:15 (midday peak)
+upw-data:forecast-20250121-48 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "48"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T12:00:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "145.2"^^xsd:double ;
+    upw:confidenceScore "0.91"^^xsd:double .
+
+# Interval 64: 16:00-16:15 (afternoon)
+upw-data:forecast-20250121-64 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "64"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T16:00:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "138.8"^^xsd:double ;
+    upw:confidenceScore "0.90"^^xsd:double .
+
+# Interval 80: 20:00-20:15 (evening ramp down)
+upw-data:forecast-20250121-80 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "80"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T20:00:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "98.5"^^xsd:double ;
+    upw:confidenceScore "0.91"^^xsd:double .
+
+# Interval 95: 23:45-00:00 (end of day)
+upw-data:forecast-20250121-95 a upw:EnergyForecastPoint ;
+    upw:intervalIndex "95"^^xsd:integer ;
+    upw:intervalStartTime "2025-01-21T23:45:00Z"^^xsd:dateTime ;
+    upw:powerConsumption "86.0"^^xsd:double ;
+    upw:confidenceScore "0.93"^^xsd:double .
+
+# =============================================================================
+# MAINTENANCE SCHEDULES AND EVENTS
+# =============================================================================
+
+# Pump maintenance schedule
+upw-data:maint-sched-pump-001 a upw:MaintenanceSchedule ;
+    rdfs:label "Pump PUMP-001 Maintenance Schedule" ;
+    upw:status "Active" ;
+    upw:hasMaintenanceEvent upw-data:maint-event-pump-001 , upw-data:maint-event-pump-002 .
+
+upw-data:maint-event-pump-001 a upw:MaintenanceEvent ;
+    rdfs:label "Pump bearing replacement" ;
+    upw:scheduledDate "2025-02-10T08:00:00Z"^^xsd:dateTime ;
+    upw:hasMaintenanceType upw:PredictiveMaintenance ;
+    upw:maintenanceDescription "Replace pump motor bearings based on vibration analysis prediction" ;
+    upw:priority "1"^^xsd:integer ;
+    upw:estimatedDuration "4.0"^^xsd:double ;
+    upw:status "Scheduled" .
+
+upw-data:maint-event-pump-002 a upw:MaintenanceEvent ;
+    rdfs:label "Pump quarterly inspection" ;
+    upw:scheduledDate "2025-04-01T08:00:00Z"^^xsd:dateTime ;
+    upw:hasMaintenanceType upw:PreventiveMaintenance ;
+    upw:maintenanceDescription "Quarterly preventive maintenance inspection" ;
+    upw:priority "3"^^xsd:integer ;
+    upw:estimatedDuration "2.0"^^xsd:double ;
+    upw:status "Scheduled" .
+
+# Filter maintenance schedule
+upw-data:maint-sched-filter-001 a upw:MaintenanceSchedule ;
+    rdfs:label "Filter FILT-001 Maintenance Schedule" ;
+    upw:status "Active" ;
+    upw:hasMaintenanceEvent upw-data:maint-event-filter-001 .
+
+upw-data:maint-event-filter-001 a upw:MaintenanceEvent ;
+    rdfs:label "Filter element replacement" ;
+    upw:scheduledDate "2025-02-01T08:00:00Z"^^xsd:dateTime ;
+    upw:hasMaintenanceType upw:PreventiveMaintenance ;
+    upw:maintenanceDescription "Replace filter elements - scheduled interval" ;
+    upw:priority "2"^^xsd:integer ;
+    upw:estimatedDuration "1.5"^^xsd:double ;
+    upw:status "Scheduled" .
+
+# RO System maintenance schedule
+upw-data:maint-sched-ro-001 a upw:MaintenanceSchedule ;
+    rdfs:label "RO System RO-001 Maintenance Schedule" ;
+    upw:status "Active" ;
+    upw:hasMaintenanceEvent upw-data:maint-event-ro-001 , upw-data:maint-event-ro-002 .
+
+upw-data:maint-event-ro-001 a upw:MaintenanceEvent ;
+    rdfs:label "RO membrane CIP cleaning" ;
+    upw:scheduledDate "2025-01-25T06:00:00Z"^^xsd:dateTime ;
+    upw:hasMaintenanceType upw:PreventiveMaintenance ;
+    upw:maintenanceDescription "Clean-in-place membrane cleaning procedure" ;
+    upw:priority "2"^^xsd:integer ;
+    upw:estimatedDuration "6.0"^^xsd:double ;
+    upw:status "Scheduled" .
+
+upw-data:maint-event-ro-002 a upw:MaintenanceEvent ;
+    rdfs:label "RO membrane replacement" ;
+    upw:scheduledDate "2025-02-25T08:00:00Z"^^xsd:dateTime ;
+    upw:hasMaintenanceType upw:PredictiveMaintenance ;
+    upw:maintenanceDescription "Replace RO membranes based on performance prediction" ;
+    upw:priority "1"^^xsd:integer ;
+    upw:estimatedDuration "8.0"^^xsd:double ;
+    upw:status "Scheduled" .
+
+# Ion Exchanger maintenance schedule
+upw-data:maint-sched-ix-001 a upw:MaintenanceSchedule ;
+    rdfs:label "Ion Exchanger IX-001 Maintenance Schedule" ;
+    upw:status "Active" ;
+    upw:hasMaintenanceEvent upw-data:maint-event-ix-001 .
+
+upw-data:maint-event-ix-001 a upw:MaintenanceEvent ;
+    rdfs:label "IX resin regeneration" ;
+    upw:scheduledDate "2025-01-28T22:00:00Z"^^xsd:dateTime ;
+    upw:hasMaintenanceType upw:PreventiveMaintenance ;
+    upw:maintenanceDescription "Scheduled resin regeneration cycle" ;
+    upw:priority "2"^^xsd:integer ;
+    upw:estimatedDuration "4.0"^^xsd:double ;
+    upw:status "Scheduled" .
+
+# UV Sterilizer maintenance schedule
+upw-data:maint-sched-uv-001 a upw:MaintenanceSchedule ;
+    rdfs:label "UV Sterilizer UV-001 Maintenance Schedule" ;
+    upw:status "Active" ;
+    upw:hasMaintenanceEvent upw-data:maint-event-uv-001 .
+
+upw-data:maint-event-uv-001 a upw:MaintenanceEvent ;
+    rdfs:label "UV lamp replacement" ;
+    upw:scheduledDate "2025-03-15T08:00:00Z"^^xsd:dateTime ;
+    upw:hasMaintenanceType upw:PreventiveMaintenance ;
+    upw:maintenanceDescription "Replace UV lamps - scheduled interval based on operating hours" ;
+    upw:priority "2"^^xsd:integer ;
+    upw:estimatedDuration "1.0"^^xsd:double ;
+    upw:status "Scheduled" .
+
+# Storage Tank maintenance schedule
+upw-data:maint-sched-tank-001 a upw:MaintenanceSchedule ;
+    rdfs:label "Storage Tank TANK-001 Maintenance Schedule" ;
+    upw:status "Active" ;
+    upw:hasMaintenanceEvent upw-data:maint-event-tank-001 .
+
+upw-data:maint-event-tank-001 a upw:MaintenanceEvent ;
+    rdfs:label "Tank inspection and cleaning" ;
+    upw:scheduledDate "2025-06-01T06:00:00Z"^^xsd:dateTime ;
+    upw:hasMaintenanceType upw:PreventiveMaintenance ;
+    upw:maintenanceDescription "Annual tank inspection and internal cleaning" ;
+    upw:priority "3"^^xsd:integer ;
+    upw:estimatedDuration "8.0"^^xsd:double ;
+    upw:status "Scheduled" .
+
+# Completed maintenance event example
+upw-data:maint-event-pump-past a upw:MaintenanceEvent ;
+    rdfs:label "Pump seal replacement" ;
+    upw:scheduledDate "2024-10-15T08:00:00Z"^^xsd:dateTime ;
+    upw:completedDate "2024-10-15T12:30:00Z"^^xsd:dateTime ;
+    upw:hasMaintenanceType upw:CorrectiveMaintenance ;
+    upw:maintenanceDescription "Emergency seal replacement due to minor leak" ;
+    upw:priority "1"^^xsd:integer ;
+    upw:estimatedDuration "3.0"^^xsd:double ;
+    upw:status "Completed" .

@@ -1,0 +1,510 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix ssn: <http://www.w3.org/ns/ssn/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix upw: <http://example.org/upw#> .
+
+# =============================================================================
+# UPW (Ultra Pure Water) Process Ontology
+# =============================================================================
+# Purpose: Factory Ultra Pure Water Process domain ontology supporting
+#          - Predictive Maintenance (anomaly detection, failure prediction)
+#          - Energy Prediction (96-point 15-min interval next-day forecasting)
+# =============================================================================
+
+<http://example.org/upw#> a owl:Ontology ;
+    rdfs:label "UPW Process Ontology"@en ;
+    rdfs:comment "Ontology for Ultra Pure Water Process monitoring, predictive maintenance, and energy forecasting"@en ;
+    owl:versionInfo "1.0.0" ;
+    owl:imports <http://www.w3.org/ns/sosa/> .
+
+# =============================================================================
+# EQUIPMENT CLASSES
+# =============================================================================
+
+upw:Equipment a owl:Class ;
+    rdfs:label "Equipment"@en ;
+    rdfs:comment "Base class for all UPW process equipment"@en .
+
+upw:Pump a owl:Class ;
+    rdfs:subClassOf upw:Equipment ;
+    rdfs:label "Pump"@en ;
+    rdfs:comment "Water pump in the UPW process"@en .
+
+upw:Filter a owl:Class ;
+    rdfs:subClassOf upw:Equipment ;
+    rdfs:label "Filter"@en ;
+    rdfs:comment "Filtration unit in the UPW process"@en .
+
+upw:ROSystem a owl:Class ;
+    rdfs:subClassOf upw:Equipment ;
+    rdfs:label "RO System"@en ;
+    rdfs:comment "Reverse Osmosis system for water purification"@en .
+
+upw:IonExchanger a owl:Class ;
+    rdfs:subClassOf upw:Equipment ;
+    rdfs:label "Ion Exchanger"@en ;
+    rdfs:comment "Ion exchange unit for removing dissolved ions"@en .
+
+upw:UVSterilizer a owl:Class ;
+    rdfs:subClassOf upw:Equipment ;
+    rdfs:label "UV Sterilizer"@en ;
+    rdfs:comment "Ultraviolet sterilization unit"@en .
+
+upw:StorageTank a owl:Class ;
+    rdfs:subClassOf upw:Equipment ;
+    rdfs:label "Storage Tank"@en ;
+    rdfs:comment "Ultra pure water storage tank"@en .
+
+# =============================================================================
+# SENSOR CLASSES (subclasses of sosa:Sensor)
+# =============================================================================
+
+upw:Sensor a owl:Class ;
+    rdfs:subClassOf sosa:Sensor ;
+    rdfs:label "UPW Sensor"@en ;
+    rdfs:comment "Base class for all UPW process sensors"@en .
+
+upw:VibrationSensor a owl:Class ;
+    rdfs:subClassOf upw:Sensor ;
+    rdfs:label "Vibration Sensor"@en ;
+    rdfs:comment "Sensor for measuring equipment vibration (mm/s)"@en .
+
+upw:PressureSensor a owl:Class ;
+    rdfs:subClassOf upw:Sensor ;
+    rdfs:label "Pressure Sensor"@en ;
+    rdfs:comment "Sensor for measuring pressure (bar)"@en .
+
+upw:FlowSensor a owl:Class ;
+    rdfs:subClassOf upw:Sensor ;
+    rdfs:label "Flow Sensor"@en ;
+    rdfs:comment "Sensor for measuring flow rate (L/min)"@en .
+
+upw:TemperatureSensor a owl:Class ;
+    rdfs:subClassOf upw:Sensor ;
+    rdfs:label "Temperature Sensor"@en ;
+    rdfs:comment "Sensor for measuring temperature (Celsius)"@en .
+
+upw:CurrentSensor a owl:Class ;
+    rdfs:subClassOf upw:Sensor ;
+    rdfs:label "Current Sensor"@en ;
+    rdfs:comment "Sensor for measuring electrical current (Ampere)"@en .
+
+upw:DifferentialPressureSensor a owl:Class ;
+    rdfs:subClassOf upw:Sensor ;
+    rdfs:label "Differential Pressure Sensor"@en ;
+    rdfs:comment "Sensor for measuring pressure difference across equipment (bar)"@en .
+
+upw:ConductivitySensor a owl:Class ;
+    rdfs:subClassOf upw:Sensor ;
+    rdfs:label "Conductivity Sensor"@en ;
+    rdfs:comment "Sensor for measuring water conductivity (uS/cm)"@en .
+
+upw:ResistivitySensor a owl:Class ;
+    rdfs:subClassOf upw:Sensor ;
+    rdfs:label "Resistivity Sensor"@en ;
+    rdfs:comment "Sensor for measuring water resistivity (MOhm-cm)"@en .
+
+upw:UVIntensitySensor a owl:Class ;
+    rdfs:subClassOf upw:Sensor ;
+    rdfs:label "UV Intensity Sensor"@en ;
+    rdfs:comment "Sensor for measuring UV light intensity (mW/cm2)"@en .
+
+upw:LevelSensor a owl:Class ;
+    rdfs:subClassOf upw:Sensor ;
+    rdfs:label "Level Sensor"@en ;
+    rdfs:comment "Sensor for measuring tank water level (percent)"@en .
+
+# =============================================================================
+# OBSERVABLE PROPERTY CLASSES
+# =============================================================================
+
+upw:ObservableProperty a owl:Class ;
+    rdfs:subClassOf sosa:ObservableProperty ;
+    rdfs:label "Observable Property"@en ;
+    rdfs:comment "Property that can be observed by UPW sensors"@en .
+
+upw:Vibration a owl:Class ;
+    rdfs:subClassOf upw:ObservableProperty ;
+    rdfs:label "Vibration"@en .
+
+upw:Pressure a owl:Class ;
+    rdfs:subClassOf upw:ObservableProperty ;
+    rdfs:label "Pressure"@en .
+
+upw:FlowRate a owl:Class ;
+    rdfs:subClassOf upw:ObservableProperty ;
+    rdfs:label "Flow Rate"@en .
+
+upw:Temperature a owl:Class ;
+    rdfs:subClassOf upw:ObservableProperty ;
+    rdfs:label "Temperature"@en .
+
+upw:ElectricalCurrent a owl:Class ;
+    rdfs:subClassOf upw:ObservableProperty ;
+    rdfs:label "Electrical Current"@en .
+
+upw:DifferentialPressure a owl:Class ;
+    rdfs:subClassOf upw:ObservableProperty ;
+    rdfs:label "Differential Pressure"@en .
+
+upw:Conductivity a owl:Class ;
+    rdfs:subClassOf upw:ObservableProperty ;
+    rdfs:label "Conductivity"@en .
+
+upw:Resistivity a owl:Class ;
+    rdfs:subClassOf upw:ObservableProperty ;
+    rdfs:label "Resistivity"@en .
+
+upw:UVIntensity a owl:Class ;
+    rdfs:subClassOf upw:ObservableProperty ;
+    rdfs:label "UV Intensity"@en .
+
+upw:WaterLevel a owl:Class ;
+    rdfs:subClassOf upw:ObservableProperty ;
+    rdfs:label "Water Level"@en .
+
+upw:PowerConsumption a owl:Class ;
+    rdfs:subClassOf upw:ObservableProperty ;
+    rdfs:label "Power Consumption"@en .
+
+# =============================================================================
+# OBSERVATION AND PREDICTION CLASSES
+# =============================================================================
+
+upw:SensorObservation a owl:Class ;
+    rdfs:subClassOf sosa:Observation ;
+    rdfs:label "Sensor Observation"@en ;
+    rdfs:comment "A single observation made by a sensor"@en .
+
+upw:AnomalyDetection a owl:Class ;
+    rdfs:subClassOf sosa:Observation ;
+    rdfs:label "Anomaly Detection"@en ;
+    rdfs:comment "Detection of anomalous behavior based on sensor data"@en .
+
+upw:FailurePrediction a owl:Class ;
+    rdfs:subClassOf sosa:Observation ;
+    rdfs:label "Failure Prediction"@en ;
+    rdfs:comment "Predicted equipment failure with confidence score"@en .
+
+upw:EnergyPrediction a owl:Class ;
+    rdfs:subClassOf sosa:Observation ;
+    rdfs:label "Energy Prediction"@en ;
+    rdfs:comment "Energy consumption prediction for a specific day"@en .
+
+upw:EnergyForecastPoint a owl:Class ;
+    rdfs:subClassOf sosa:Observation ;
+    rdfs:label "Energy Forecast Point"@en ;
+    rdfs:comment "Single 15-minute interval energy prediction (one of 96 daily points)"@en .
+
+# =============================================================================
+# MAINTENANCE CLASSES
+# =============================================================================
+
+upw:MaintenanceSchedule a owl:Class ;
+    rdfs:label "Maintenance Schedule"@en ;
+    rdfs:comment "Optimized maintenance schedule for equipment"@en .
+
+upw:MaintenanceEvent a owl:Class ;
+    rdfs:label "Maintenance Event"@en ;
+    rdfs:comment "A scheduled or completed maintenance activity"@en .
+
+upw:MaintenanceType a owl:Class ;
+    rdfs:label "Maintenance Type"@en ;
+    rdfs:comment "Category of maintenance activity"@en .
+
+# Maintenance Type Individuals
+upw:PreventiveMaintenance a upw:MaintenanceType ;
+    rdfs:label "Preventive Maintenance"@en .
+
+upw:CorrectiveMaintenance a upw:MaintenanceType ;
+    rdfs:label "Corrective Maintenance"@en .
+
+upw:PredictiveMaintenance a upw:MaintenanceType ;
+    rdfs:label "Predictive Maintenance"@en .
+
+# =============================================================================
+# OBJECT PROPERTIES
+# =============================================================================
+
+# Equipment-Sensor relationships
+upw:hasSensor a owl:ObjectProperty ;
+    rdfs:label "has sensor"@en ;
+    rdfs:comment "Links equipment to its sensors"@en ;
+    rdfs:domain upw:Equipment ;
+    rdfs:range upw:Sensor .
+
+upw:monitoredBy a owl:ObjectProperty ;
+    rdfs:label "monitored by"@en ;
+    rdfs:comment "Links sensor to the equipment it monitors"@en ;
+    owl:inverseOf upw:hasSensor ;
+    rdfs:domain upw:Sensor ;
+    rdfs:range upw:Equipment .
+
+# Sensor-Observation relationships
+upw:hasObservation a owl:ObjectProperty ;
+    rdfs:label "has observation"@en ;
+    rdfs:comment "Links sensor to its observations"@en ;
+    rdfs:domain upw:Sensor ;
+    rdfs:range sosa:Observation .
+
+# Equipment-Prediction relationships
+upw:hasPrediction a owl:ObjectProperty ;
+    rdfs:label "has prediction"@en ;
+    rdfs:comment "Links equipment to predictions about it"@en ;
+    rdfs:domain upw:Equipment ;
+    rdfs:range [ a owl:Class ; owl:unionOf (upw:FailurePrediction upw:EnergyPrediction) ] .
+
+# Equipment-Maintenance relationships
+upw:hasMaintenanceSchedule a owl:ObjectProperty ;
+    rdfs:label "has maintenance schedule"@en ;
+    rdfs:comment "Links equipment to its maintenance schedule"@en ;
+    rdfs:domain upw:Equipment ;
+    rdfs:range upw:MaintenanceSchedule .
+
+upw:hasMaintenanceEvent a owl:ObjectProperty ;
+    rdfs:label "has maintenance event"@en ;
+    rdfs:comment "Links schedule to maintenance events"@en ;
+    rdfs:domain upw:MaintenanceSchedule ;
+    rdfs:range upw:MaintenanceEvent .
+
+upw:hasMaintenanceType a owl:ObjectProperty ;
+    rdfs:label "has maintenance type"@en ;
+    rdfs:comment "Specifies the type of maintenance"@en ;
+    rdfs:domain upw:MaintenanceEvent ;
+    rdfs:range upw:MaintenanceType .
+
+# Anomaly relationships
+upw:hasAnomalyDetection a owl:ObjectProperty ;
+    rdfs:label "has anomaly detection"@en ;
+    rdfs:comment "Links observation to anomaly detection result"@en ;
+    rdfs:domain sosa:Observation ;
+    rdfs:range upw:AnomalyDetection .
+
+upw:triggeredBy a owl:ObjectProperty ;
+    rdfs:label "triggered by"@en ;
+    rdfs:comment "Links prediction to the observations that triggered it"@en ;
+    rdfs:domain [ a owl:Class ; owl:unionOf (upw:FailurePrediction upw:AnomalyDetection) ] ;
+    rdfs:range sosa:Observation .
+
+# Energy forecast relationships
+upw:hasForecastPoint a owl:ObjectProperty ;
+    rdfs:label "has forecast point"@en ;
+    rdfs:comment "Links energy prediction to its 15-min interval forecast points"@en ;
+    rdfs:domain upw:EnergyPrediction ;
+    rdfs:range upw:EnergyForecastPoint .
+
+upw:basedOnHistory a owl:ObjectProperty ;
+    rdfs:label "based on history"@en ;
+    rdfs:comment "Links prediction to historical observations it's based on"@en ;
+    rdfs:domain upw:EnergyPrediction ;
+    rdfs:range sosa:Observation .
+
+# =============================================================================
+# DATA PROPERTIES
+# =============================================================================
+
+# General measurement properties
+upw:value a owl:DatatypeProperty ;
+    rdfs:label "value"@en ;
+    rdfs:comment "Numeric value of observation or prediction"@en ;
+    rdfs:range xsd:double .
+
+upw:timestamp a owl:DatatypeProperty ;
+    rdfs:label "timestamp"@en ;
+    rdfs:comment "Date and time of observation or event"@en ;
+    rdfs:range xsd:dateTime .
+
+upw:unit a owl:DatatypeProperty ;
+    rdfs:label "unit"@en ;
+    rdfs:comment "Unit of measurement"@en ;
+    rdfs:range xsd:string .
+
+# Equipment properties
+upw:equipmentId a owl:DatatypeProperty ;
+    rdfs:label "equipment ID"@en ;
+    rdfs:comment "Unique identifier for equipment"@en ;
+    rdfs:domain upw:Equipment ;
+    rdfs:range xsd:string .
+
+upw:equipmentName a owl:DatatypeProperty ;
+    rdfs:label "equipment name"@en ;
+    rdfs:comment "Human-readable name for equipment"@en ;
+    rdfs:domain upw:Equipment ;
+    rdfs:range xsd:string .
+
+upw:installationDate a owl:DatatypeProperty ;
+    rdfs:label "installation date"@en ;
+    rdfs:comment "Date when equipment was installed"@en ;
+    rdfs:domain upw:Equipment ;
+    rdfs:range xsd:date .
+
+upw:operatingHours a owl:DatatypeProperty ;
+    rdfs:label "operating hours"@en ;
+    rdfs:comment "Total operating hours of equipment"@en ;
+    rdfs:domain upw:Equipment ;
+    rdfs:range xsd:double .
+
+# Sensor properties
+upw:sensorId a owl:DatatypeProperty ;
+    rdfs:label "sensor ID"@en ;
+    rdfs:comment "Unique identifier for sensor"@en ;
+    rdfs:domain upw:Sensor ;
+    rdfs:range xsd:string .
+
+upw:sensorLocation a owl:DatatypeProperty ;
+    rdfs:label "sensor location"@en ;
+    rdfs:comment "Physical location description of sensor"@en ;
+    rdfs:domain upw:Sensor ;
+    rdfs:range xsd:string .
+
+upw:samplingRate a owl:DatatypeProperty ;
+    rdfs:label "sampling rate"@en ;
+    rdfs:comment "Sampling rate in Hz"@en ;
+    rdfs:domain upw:Sensor ;
+    rdfs:range xsd:double .
+
+# Prediction properties
+upw:confidenceScore a owl:DatatypeProperty ;
+    rdfs:label "confidence score"@en ;
+    rdfs:comment "Confidence level of prediction (0.0-1.0)"@en ;
+    rdfs:range xsd:double .
+
+upw:anomalyScore a owl:DatatypeProperty ;
+    rdfs:label "anomaly score"@en ;
+    rdfs:comment "Anomaly score indicating deviation from normal (0.0-1.0)"@en ;
+    rdfs:domain upw:AnomalyDetection ;
+    rdfs:range xsd:double .
+
+upw:predictedFailureDate a owl:DatatypeProperty ;
+    rdfs:label "predicted failure date"@en ;
+    rdfs:comment "Predicted date of equipment failure"@en ;
+    rdfs:domain upw:FailurePrediction ;
+    rdfs:range xsd:dateTime .
+
+upw:remainingUsefulLife a owl:DatatypeProperty ;
+    rdfs:label "remaining useful life"@en ;
+    rdfs:comment "Estimated remaining useful life in hours"@en ;
+    rdfs:domain upw:FailurePrediction ;
+    rdfs:range xsd:double .
+
+upw:failureMode a owl:DatatypeProperty ;
+    rdfs:label "failure mode"@en ;
+    rdfs:comment "Type of predicted failure"@en ;
+    rdfs:domain upw:FailurePrediction ;
+    rdfs:range xsd:string .
+
+# Energy prediction properties
+upw:intervalIndex a owl:DatatypeProperty ;
+    rdfs:label "interval index"@en ;
+    rdfs:comment "Index of 15-min interval (0-95 for 96 daily intervals)"@en ;
+    rdfs:domain upw:EnergyForecastPoint ;
+    rdfs:range xsd:integer .
+
+upw:intervalStartTime a owl:DatatypeProperty ;
+    rdfs:label "interval start time"@en ;
+    rdfs:comment "Start time of the 15-minute interval"@en ;
+    rdfs:domain upw:EnergyForecastPoint ;
+    rdfs:range xsd:dateTime .
+
+upw:powerConsumption a owl:DatatypeProperty ;
+    rdfs:label "power consumption"@en ;
+    rdfs:comment "Power consumption in kWh"@en ;
+    rdfs:range xsd:double .
+
+upw:forecastDate a owl:DatatypeProperty ;
+    rdfs:label "forecast date"@en ;
+    rdfs:comment "Date for which the forecast is made"@en ;
+    rdfs:domain upw:EnergyPrediction ;
+    rdfs:range xsd:date .
+
+upw:totalDailyEnergy a owl:DatatypeProperty ;
+    rdfs:label "total daily energy"@en ;
+    rdfs:comment "Total predicted energy for the day in kWh"@en ;
+    rdfs:domain upw:EnergyPrediction ;
+    rdfs:range xsd:double .
+
+upw:peakPower a owl:DatatypeProperty ;
+    rdfs:label "peak power"@en ;
+    rdfs:comment "Peak power consumption in kW"@en ;
+    rdfs:domain upw:EnergyPrediction ;
+    rdfs:range xsd:double .
+
+# Maintenance properties
+upw:scheduledDate a owl:DatatypeProperty ;
+    rdfs:label "scheduled date"@en ;
+    rdfs:comment "Scheduled date for maintenance"@en ;
+    rdfs:domain upw:MaintenanceEvent ;
+    rdfs:range xsd:dateTime .
+
+upw:completedDate a owl:DatatypeProperty ;
+    rdfs:label "completed date"@en ;
+    rdfs:comment "Actual completion date of maintenance"@en ;
+    rdfs:domain upw:MaintenanceEvent ;
+    rdfs:range xsd:dateTime .
+
+upw:maintenanceDescription a owl:DatatypeProperty ;
+    rdfs:label "maintenance description"@en ;
+    rdfs:comment "Description of maintenance activity"@en ;
+    rdfs:domain upw:MaintenanceEvent ;
+    rdfs:range xsd:string .
+
+upw:priority a owl:DatatypeProperty ;
+    rdfs:label "priority"@en ;
+    rdfs:comment "Priority level (1=highest, 5=lowest)"@en ;
+    rdfs:domain upw:MaintenanceEvent ;
+    rdfs:range xsd:integer .
+
+upw:estimatedDuration a owl:DatatypeProperty ;
+    rdfs:label "estimated duration"@en ;
+    rdfs:comment "Estimated maintenance duration in hours"@en ;
+    rdfs:domain upw:MaintenanceEvent ;
+    rdfs:range xsd:double .
+
+upw:status a owl:DatatypeProperty ;
+    rdfs:label "status"@en ;
+    rdfs:comment "Current status of event or schedule"@en ;
+    rdfs:range xsd:string .
+
+# =============================================================================
+# PROPERTY RESTRICTIONS AND CONSTRAINTS
+# =============================================================================
+
+# Anomaly score must be between 0 and 1
+upw:AnomalyDetection rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty upw:anomalyScore ;
+    owl:someValuesFrom xsd:double
+] .
+
+# Confidence score must be between 0 and 1
+upw:FailurePrediction rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty upw:confidenceScore ;
+    owl:someValuesFrom xsd:double
+] .
+
+# Interval index must be 0-95
+upw:EnergyForecastPoint rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty upw:intervalIndex ;
+    owl:someValuesFrom xsd:integer
+] .
+
+# Equipment must have at least one sensor
+upw:Equipment rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty upw:hasSensor ;
+    owl:minCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+# Energy prediction must have exactly 96 forecast points
+upw:EnergyPrediction rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty upw:hasForecastPoint ;
+    owl:minCardinality "96"^^xsd:nonNegativeInteger
+] .
